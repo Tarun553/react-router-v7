@@ -1,0 +1,198 @@
+.upload-item {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 8px;
+  display: flex;
+  gap: 12px;
+  transition: all 0.2s;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.upload-item:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-color: #d1d5db;
+}
+
+.upload-item.completed {
+  background: #f0fdf4;
+  border-color: #86efac;
+}
+
+.upload-item.failed {
+  background: #fef2f2;
+  border-color: #fca5a5;
+}
+
+.upload-item.cancelled {
+  background: #f9fafb;
+  border-color: #d1d5db;
+  opacity: 0.7;
+}
+
+.upload-item-icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 8px;
+  color: white;
+}
+
+.upload-item.completed .upload-item-icon {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.upload-item.failed .upload-item-icon {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+}
+
+.upload-item.cancelled .upload-item-icon {
+  background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+}
+
+.upload-item-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.upload-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.upload-item-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1f2937;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+}
+
+.upload-item-size {
+  font-size: 12px;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.upload-progress-bar {
+  width: 100%;
+  height: 6px;
+  background: #e5e7eb;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.upload-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: 200px 0;
+  }
+}
+
+.upload-item-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.upload-progress-text {
+  font-size: 12px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.upload-status-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.upload-status-badge.success {
+  color: #059669;
+}
+
+.upload-status-badge.error {
+  color: #dc2626;
+}
+
+.upload-status-badge.cancelled {
+  color: #6b7280;
+}
+
+.upload-action-button {
+  background: none;
+  border: none;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.upload-action-button.cancel {
+  color: #6b7280;
+}
+
+.upload-action-button.cancel:hover {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.upload-action-button.retry {
+  color: #3b82f6;
+}
+
+.upload-action-button.retry:hover {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.upload-action-button.remove {
+  color: #6b7280;
+}
+
+.upload-action-button.remove:hover {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.upload-action-button:active {
+  transform: scale(0.95);
+}

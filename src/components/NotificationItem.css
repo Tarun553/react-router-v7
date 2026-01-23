@@ -1,0 +1,136 @@
+.notification-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  background: white;
+  border-radius: 8px;
+  border-left: 3px solid #3b82f6;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.notification-item:hover {
+  background: #f8fafc;
+  transform: translateX(-2px);
+}
+
+.notification-item.unread {
+  background: #eff6ff;
+}
+
+.notification-item.success {
+  border-left-color: #10b981;
+}
+
+.notification-item.warning {
+  border-left-color: #f59e0b;
+}
+
+.notification-item.error {
+  border-left-color: #ef4444;
+}
+
+.notification-item-icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #dbeafe;
+  color: #3b82f6;
+}
+
+.notification-item-icon.success {
+  background: #d1fae5;
+  color: #10b981;
+}
+
+.notification-item-icon.warning {
+  background: #fef3c7;
+  color: #f59e0b;
+}
+
+.notification-item-icon.error {
+  background: #fee2e2;
+  color: #ef4444;
+}
+
+.notification-item-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.notification-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.notification-item-title {
+  font-weight: 600;
+  font-size: 14px;
+  color: #1e293b;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.notification-item-time {
+  font-size: 12px;
+  color: #64748b;
+  flex-shrink: 0;
+}
+
+.notification-item-body {
+  font-size: 13px;
+  color: #475569;
+  margin: 0;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.notification-remove-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.2s ease;
+}
+
+.notification-item:hover .notification-remove-button {
+  opacity: 1;
+}
+
+.notification-remove-button:hover {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.notification-item.unread .notification-item-title::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: #3b82f6;
+  border-radius: 50%;
+  margin-right: 6px;
+}

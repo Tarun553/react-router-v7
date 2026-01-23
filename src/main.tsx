@@ -4,11 +4,14 @@ import "./index.css";
 import { router } from "./router/router.tsx";
 import { RouterProvider } from "react-router";
 import { UploadProvider } from "./contexts/UploadContext.tsx";
+import { NotificationProvider } from "./contexts/NotificationContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <UploadProvider>
-      <RouterProvider router={router} />
-    </UploadProvider>
+    <NotificationProvider>
+      <UploadProvider>
+        <RouterProvider router={router} />
+      </UploadProvider>
+    </NotificationProvider>
   </StrictMode>,
 );

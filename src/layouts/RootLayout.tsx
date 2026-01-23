@@ -1,6 +1,8 @@
 import { Link, Outlet } from "react-router";
 import FileUploadButton from "../components/FileUploadButton";
 import UploadManager from "../components/UploadManager";
+import NotificationCenter from "../components/NotificationCenter";
+import SendNotificationButton from "../components/SendNotificationButton";
 
 export default function RootLayout() {
   return (
@@ -16,7 +18,9 @@ export default function RootLayout() {
           <h1 style={{ margin: 0 }}>RRv7 Products Manager</h1>
           <nav style={{ display: "flex", gap: 12, alignItems: "center" }}>
             <Link to="/products">Products</Link>
+            <SendNotificationButton />
             <FileUploadButton />
+            <NotificationCenter />
           </nav>
         </header>
         <hr />

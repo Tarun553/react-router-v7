@@ -5,39 +5,49 @@ export default function SendNotificationButton() {
   const { sendNotification } = useNotificationContext();
 
   const handleSendNotification = () => {
-    // Mock notification examples
+    // Mock notification examples with different durations
     const notifications = [
       {
         title: "Upload Complete",
         body: "Your file 'presentation.pdf' has been uploaded successfully.",
         type: "success" as const,
+        duration: 3000, // 3 seconds
       },
       {
         title: "New Message",
         body: "You have a new message from John Doe.",
         type: "info" as const,
+        duration: 5000, // 5 seconds
       },
       {
         title: "Storage Warning",
         body: "You're running low on storage space. Only 10% remaining.",
         type: "warning" as const,
+        duration: 7000, // 7 seconds
       },
       {
         title: "Upload Failed",
         body: "Failed to upload 'document.docx'. Please try again.",
         type: "error" as const,
+        duration: 10000, // 10 seconds
       },
       {
         title: "Task Reminder",
         body: "Don't forget to submit your report by 5 PM today.",
         type: "info" as const,
+        duration: 4000, // 4 seconds
       },
     ];
 
     // Send a random notification
     const randomNotif =
       notifications[Math.floor(Math.random() * notifications.length)];
-    sendNotification(randomNotif.title, randomNotif.body, randomNotif.type);
+    sendNotification(
+      randomNotif.title,
+      randomNotif.body,
+      randomNotif.type,
+      randomNotif.duration
+    );
   };
 
   return (

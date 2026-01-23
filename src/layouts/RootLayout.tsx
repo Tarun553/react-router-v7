@@ -1,7 +1,7 @@
 import { Link, Outlet } from "react-router";
 import FileUploadButton from "../components/FileUploadButton";
 import UploadManager from "../components/UploadManager";
-import NotificationCenter from "../components/NotificationCenter";
+import NotificationToaster from "../components/NotificationToaster";
 import SendNotificationButton from "../components/SendNotificationButton";
 
 export default function RootLayout() {
@@ -20,7 +20,6 @@ export default function RootLayout() {
             <Link to="/products">Products</Link>
             <SendNotificationButton />
             <FileUploadButton />
-            <NotificationCenter />
           </nav>
         </header>
         <hr />
@@ -29,6 +28,9 @@ export default function RootLayout() {
 
       {/* Upload Manager - Fixed position bottom right */}
       <UploadManager />
+
+      {/* Notification Toaster - Fixed position top right */}
+      <NotificationToaster />
     </>
   );
 }

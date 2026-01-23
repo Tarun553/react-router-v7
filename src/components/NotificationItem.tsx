@@ -5,13 +5,16 @@ import "./NotificationItem.css";
 
 interface NotificationItemProps {
   notification: AppNotification;
+  isToast?: boolean;
 }
 
 export default function NotificationItem({
   notification,
+  isToast = false,
 }: NotificationItemProps) {
   const { markAsRead, removeNotification } = useNotificationContext();
   const [now, setNow] = useState(() => Date.now());
+  const [remainingTime, setRemainingTime] = useState<number | null>(null);
 
   // Update "now" every minute to refresh relative timestamps
   useEffect(() => {
@@ -21,6 +24,28 @@ export default function NotificationItem({
 
     return () => clearInterval(interval);
   }, []);
+
+  // Timer logic for auto-dismiss
+  useEffect(() => {
+    if (notification.autoDismiss && notification.duration && notification.duration > 0) {
+      const endTime = notification.timestamp + notification.duration;
+      const updateRemainingTime = () => {
+        const currentTime = Date.now();
+        const remaining = Math.max(0, endTime - currentTime);
+        setRemainingTime(remaining);
+        if (remaining <= 0) {
+          // Auto-remove will be handled by the context
+        }
+      };
+
+      updateRemainingTime();
+      const interval = setInterval(updateRemainingTime, 100); // Update every 100ms for smooth progress
+
+      return () => clearInterval(interval);
+    } else {
+      setRemainingTime(null);
+    }
+  }, [notification.timestamp, notification.duration, notification.autoDismiss]);
 
   const getNotificationIcon = (type: string) => {
     switch (type) {
@@ -105,9 +130,13 @@ export default function NotificationItem({
     }
   };
 
+  const progressPercentage = remainingTime !== null && notification.duration
+    ? (remainingTime / notification.duration) * 100
+    : 100;
+
   return (
     <div
-      className={`notification-item ${notification.type} ${notification.read ? "read" : "unread"}`}
+      className={`notification-item ${notification.type} ${notification.read ? "read" : "unread"} ${isToast ? "toast" : ""}`}
       onClick={handleClick}
     >
       <div className={`notification-item-icon ${notification.type}`}>
@@ -117,11 +146,23 @@ export default function NotificationItem({
       <div className="notification-item-content">
         <div className="notification-item-header">
           <span className="notification-item-title">{notification.title}</span>
-          <span className="notification-item-time">
-            {formatTimestamp(notification.timestamp)}
-          </span>
+          {!isToast && (
+            <span className="notification-item-time">
+              {formatTimestamp(notification.timestamp)}
+            </span>
+          )}
         </div>
         <p className="notification-item-body">{notification.body}</p>
+
+        {/* Timer progress bar for auto-dismiss notifications */}
+        {remainingTime !== null && notification.autoDismiss && (
+          <div className="notification-timer-bar">
+            <div
+              className="notification-timer-fill"
+              style={{ width: `${progressPercentage}%` }}
+            />
+          </div>
+        )}
       </div>
 
       <button

@@ -15,6 +15,8 @@ export interface AppNotification {
   timestamp: number;
   read: boolean;
   type: "info" | "success" | "warning" | "error";
+  duration?: number; // Duration in milliseconds for auto-dismiss
+  autoDismiss?: boolean; // Whether to auto-dismiss
 }
 
 interface NotificationContextType {
@@ -25,6 +27,8 @@ interface NotificationContextType {
     title: string,
     body: string,
     type?: "info" | "success" | "warning" | "error",
+    duration?: number,
+    autoDismiss?: boolean,
   ) => void;
   markAsRead: (id: string) => void;
   markAllAsRead: () => void;
@@ -87,6 +91,8 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
       title: string,
       body: string,
       type: "info" | "success" | "warning" | "error" = "info",
+      duration: number = 5000, // Default 5 seconds
+      autoDismiss: boolean = true,
     ) => {
       const id = `notification-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
       const timestamp = Date.now();
@@ -99,9 +105,18 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
         timestamp,
         read: false,
         type,
+        duration,
+        autoDismiss,
       };
 
       setNotifications((prev) => [newNotification, ...prev]);
+
+      // Auto-dismiss if enabled
+      if (autoDismiss && duration > 0) {
+        setTimeout(() => {
+          setNotifications((prev) => prev.filter((notif) => notif.id !== id));
+        }, duration);
+      }
 
       // Send browser notification if permission granted
       if (permissionStatus === "granted") {

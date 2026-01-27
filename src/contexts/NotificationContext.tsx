@@ -1,44 +1,16 @@
 import {
-  createContext,
-  useContext,
   useState,
   useCallback,
   useEffect,
 } from "react";
 import type { ReactNode } from "react";
+import { getIconForType } from "../utils/NotificationIcon";
+import { NotificationContext } from "../hooks/useNotification";
+import type { AppNotification } from "../types/notificationType";
 
-export interface AppNotification {
-  id: string;
-  title: string;
-  body: string;
-  icon?: string;
-  timestamp: number;
-  read: boolean;
-  type: "info" | "success" | "warning" | "error";
-  duration?: number; // Duration in milliseconds for auto-dismiss
-  autoDismiss?: boolean; // Whether to auto-dismiss
-}
 
-interface NotificationContextType {
-  notifications: AppNotification[];
-  permissionStatus: NotificationPermission;
-  requestPermission: () => Promise<void>;
-  sendNotification: (
-    title: string,
-    body: string,
-    type?: "info" | "success" | "warning" | "error",
-    duration?: number,
-    autoDismiss?: boolean,
-  ) => void;
-  markAsRead: (id: string) => void;
-  markAllAsRead: () => void;
-  removeNotification: (id: string) => void;
-  clearAll: () => void;
-}
 
-const NotificationContext = createContext<NotificationContextType | undefined>(
-  undefined,
-);
+
 
 export function NotificationProvider({ children }: { children: ReactNode }) {
   const [notifications, setNotifications] = useState<AppNotification[]>([]);
@@ -67,18 +39,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     setPermissionStatus(permission);
   }, []);
 
-  // Helper function to get icon based on notification type
-  const getIconForType = (
-    type: "info" | "success" | "warning" | "error",
-  ): string => {
-    const icons = {
-      info: "https://cdn-icons-png.flaticon.com/512/471/471662.png",
-      success: "https://cdn-icons-png.flaticon.com/512/190/190411.png",
-      warning: "https://cdn-icons-png.flaticon.com/512/564/564619.png",
-      error: "https://cdn-icons-png.flaticon.com/512/753/753345.png",
-    };
-    return icons[type];
-  };
+
 
   const markAsRead = useCallback((id: string) => {
     setNotifications((prev) =>
@@ -138,7 +99,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
         };
       }
     },
-    [permissionStatus, markAsRead, getIconForType],
+    [markAsRead, permissionStatus ],
   );
 
   const markAllAsRead = useCallback(() => {
@@ -171,12 +132,3 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
   );
 }
 
-export function useNotificationContext() {
-  const context = useContext(NotificationContext);
-  if (!context) {
-    throw new Error(
-      "useNotificationContext must be used within NotificationProvider",
-    );
-  }
-  return context;
-}

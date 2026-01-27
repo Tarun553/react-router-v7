@@ -1,5 +1,5 @@
-import { useNotificationContext } from "../contexts/NotificationContext";
-import type { AppNotification } from "../contexts/NotificationContext";
+import { useNotificationContext } from "../hooks/useNotification";
+import type { AppNotification } from "../types/notificationType";
 import { useState, useEffect } from "react";
 import "./NotificationItem.css";
 
@@ -14,7 +14,7 @@ export default function NotificationItem({
 }: NotificationItemProps) {
   const { markAsRead, removeNotification } = useNotificationContext();
   const [now, setNow] = useState(() => Date.now());
-  const [remainingTime, setRemainingTime] = useState<number | null>(null);
+  // const [remainingTime, setRemainingTime] = useState<number | null>(null);
 
   // Update "now" every minute to refresh relative timestamps
   useEffect(() => {
@@ -32,7 +32,7 @@ export default function NotificationItem({
       const updateRemainingTime = () => {
         const currentTime = Date.now();
         const remaining = Math.max(0, endTime - currentTime);
-        setRemainingTime(remaining);
+        // setRemainingTime(remaining);
         if (remaining <= 0) {
           // Auto-remove will be handled by the context
         }
@@ -43,7 +43,7 @@ export default function NotificationItem({
 
       return () => clearInterval(interval);
     } else {
-      setRemainingTime(null);
+      // setRemainingTime(null);
     }
   }, [notification.timestamp, notification.duration, notification.autoDismiss]);
 
@@ -130,8 +130,8 @@ export default function NotificationItem({
     }
   };
 
-  const progressPercentage = remainingTime !== null && notification.duration
-    ? (remainingTime / notification.duration) * 100
+  const progressPercentage = notification.duration
+    ? (notification.duration / notification.duration) * 100
     : 100;
 
   return (
@@ -155,7 +155,7 @@ export default function NotificationItem({
         <p className="notification-item-body">{notification.body}</p>
 
         {/* Timer progress bar for auto-dismiss notifications */}
-        {remainingTime !== null && notification.autoDismiss && (
+        {notification.autoDismiss && (
           <div className="notification-timer-bar">
             <div
               className="notification-timer-fill"

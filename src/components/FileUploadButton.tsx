@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { useUploadContext } from "../contexts/UploadContext";
+import { useUploadContext } from "../hooks/useContext";
 import "./FileUploadButton.css";
 
 export default function FileUploadButton() {

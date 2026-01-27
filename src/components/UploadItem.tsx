@@ -1,5 +1,5 @@
-import { useUploadContext } from "../contexts/UploadContext";
-import type { Upload } from "../contexts/UploadContext";
+import { useUploadContext } from "../hooks/useContext";
+import type { Upload } from "../types/uploadTypes";
 import "./UploadItem.css";
 
 interface UploadItemProps {

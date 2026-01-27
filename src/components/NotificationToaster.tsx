@@ -1,4 +1,4 @@
-import { useNotificationContext } from "../contexts/NotificationContext";
+import { useNotificationContext } from "../hooks/useNotification";
 import "./NotificationToaster.css";
 import NotificationItem from "./NotificationItem";
 

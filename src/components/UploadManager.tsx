@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useUploadContext } from "../contexts/UploadContext";
+import { useUploadContext } from "../hooks/useContext";
 import "./UploadManager.css";
 import UploadItem from "./UploadItem";
 

@@ -1,8 +1,9 @@
-import { Form, Link, useLoaderData, useSearchParams, useFetcher } from "react-router";
+import { Form, Link, useLoaderData, useSearchParams } from "react-router";
 import type { LoaderFunctionArgs } from "react-router";
 import { listProducts } from "../features/products/api";
 import type { Product } from "../features/products/types";
 import { getFavoriteSet } from "../features/products/fav";
+import { FavoriteButton } from "../components/FavButton";
 
 const PAGE_SIZE = 12;
 
@@ -58,8 +59,8 @@ export default function ProductsPage() {
           method="get"
           style={{ display: "flex", gap: 8, alignItems: "center" }}
         >
-          <input name="q" defaultValue={q} placeholder="Search products..." />
-          <button type="submit">Search</button>
+          <input className="input border rounded border-gray-300 " name="q" defaultValue={q} placeholder="Search products..." />
+          <button className="button" type="submit">Search</button>
 
           <input type="hidden" name="page" value="1" />
 
@@ -132,11 +133,14 @@ export default function ProductsPage() {
             <p style={{ margin: "8px 0", color: "#555" }}>
               {p.description.slice(0, 70)}…
             </p>
-         
-            <Link to={`/products/${p.id}`}>View</Link>
+             <div style={{ display: "flex", justifyContent: "space-between", gap: 8, alignItems: "center" }}>
+
+           
+            <Link className="button rounded-full bg-blue-500 px-4 py-2" to={`/products/${p.id}`}>View</Link>
             <span style={{ fontSize: 12, color: "#777" }}>
               #{p.id} • {p.category}
             </span>
+            </div>
           </li>
         ))}
       </ul>
@@ -145,21 +149,4 @@ export default function ProductsPage() {
 }
 
 
-
-function FavoriteButton({ id, favorite }: { id: number; favorite: boolean }) {
-  const fetcher = useFetcher();
-
-  // Optional optimistic UI:
-  const isSubmittingThis = Number(fetcher.formData?.get("id")) === id;
-  const optimisticFavorite = isSubmittingThis ? !favorite : favorite;
-
-  return (
-    <fetcher.Form method="post" action="/favorites" style={{ display: "inline" }}>
-      <input type="hidden" name="id" value={id} />
-      <button type="submit" aria-label="Toggle favorite">
-        {optimisticFavorite ? "★" : "☆"}
-      </button>
-    </fetcher.Form>
-  );
-}
 

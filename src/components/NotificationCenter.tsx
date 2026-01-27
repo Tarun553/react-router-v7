@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { useNotificationContext } from "../contexts/NotificationContext";
 import "./NotificationCenter.css";
 import NotificationItem from "./NotificationItem";
+import { useNotificationContext } from "../hooks/useNotification";
+
 
 export default function NotificationCenter() {
   const {

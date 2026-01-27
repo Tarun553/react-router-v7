@@ -6,24 +6,31 @@ import SendNotificationButton from "../components/SendNotificationButton";
 
 export default function RootLayout() {
   return (
-    <>
-      <div style={{ maxWidth: 1000, margin: "24px auto", padding: 16 }}>
-        <header
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <h1 style={{ margin: 0 }}>RRv7 Products Manager</h1>
-          <nav style={{ display: "flex", gap: 12, alignItems: "center" }}>
-            <Link to="/products">Products</Link>
-            <SendNotificationButton />
-            <FileUploadButton />
+    <div className="min-h-screen bg-slate-50/50 font-sans antialiased">
+      <div className="max-w-5xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+        <header className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+            RRv7 Products Manager
+          </h1>
+          <nav className="flex items-center gap-6">
+            <Link
+              to="/products"
+              className="text-sm font-semibold text-slate-600 hover:text-indigo-600 transition-colors"
+            >
+              Products
+            </Link>
+            <div className="flex items-center gap-3">
+              <SendNotificationButton />
+              <FileUploadButton />
+            </div>
           </nav>
         </header>
-        <hr />
-        <Outlet />
+
+        <hr className="border-slate-200 mb-8" />
+
+        <main>
+          <Outlet />
+        </main>
       </div>
 
       {/* Upload Manager - Fixed position bottom right */}
@@ -31,6 +38,6 @@ export default function RootLayout() {
 
       {/* Notification Toaster - Fixed position top right */}
       <NotificationToaster />
-    </>
+    </div>
   );
 }
